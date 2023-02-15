@@ -1,0 +1,15 @@
+%{
+    #include <iostream>
+%}
+
+%option noyywrap
+%option array
+%option yylineno
+
+WHITESPACE [\ \t\v\r\n]
+
+%%
+
+{WHITESPACE}+           { /* Eliminate whitespace */ }
+
+%%

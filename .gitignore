@@ -1,2 +1,3 @@
 **.o
 slang
+src/scanner.cpp
