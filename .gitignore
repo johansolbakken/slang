@@ -1,3 +1,4 @@
 **.o
 slang
 src/scanner.cpp
+src/parser.tab.*

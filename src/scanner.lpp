@@ -1,5 +1,6 @@
 %{
     #include <iostream>
+    #include "slang.hpp"
 %}
 
 %option noyywrap
@@ -10,6 +11,7 @@ WHITESPACE [\ \t\v\r\n]
 
 %%
 
-{WHITESPACE}+           { /* Eliminate whitespace */ }
+{WHITESPACE}+           { }
+func                    { return FUNC; }
 
 %%

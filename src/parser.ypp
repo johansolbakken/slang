@@ -1,0 +1,30 @@
+%{
+    #include "slang.hpp"
+    #include <iostream>
+%}
+
+%token FUNC PRINT RETURN CONTINUE IF THEN ELSE WHILE DO OPENBLOCK CLOSEBLOCK
+%token VAR NUMBER IDENTIFIER STRING
+
+%left '|' '&' '^'
+%left '+' '-'
+%left '*' '/'
+%nonassoc UMINUS
+%right '~'
+//%expect 1
+
+%nonassoc IF THEN
+%nonassoc ELSE
+
+%%
+
+program : FUNC {
+
+}
+
+%%
+
+int yyerror(const char* error) {
+    std::cout << error << " on line " << yylineno << std::endl;
+    exit(EXIT_FAILURE);
+}
