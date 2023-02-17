@@ -34,28 +34,3 @@ const char *nodeTypeToString(NodeType type)
 {
     return node_type_string[(int)type];
 }
-
-Node::Node(NodeType type, const NodeRefList &children)
-    : type(type), children(children)
-{
-}
-
-Node::~Node()
-{
-    delete data;
-}
-
-void Node::print(int indent)
-{
-    for (int i = 0; i < indent; i++)
-    {
-        std::cout << " ";
-    }
-
-    std::cout << nodeTypeToString(type) << std::endl;
-
-    for (auto child : children)
-    {
-        child->print(indent + 2);
-    }
-}
