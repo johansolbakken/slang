@@ -2,3 +2,4 @@
 slang
 src/scanner.cpp
 src/parser.tab.*
+.vscode
