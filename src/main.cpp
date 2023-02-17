@@ -1,6 +1,5 @@
 #include <iostream>
 
-#include "header.hpp"
 #include "slang.hpp"
 
 Node* root;

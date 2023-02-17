@@ -4,7 +4,7 @@ YACC=bison
 YFLAGS=--defines=src/parser.tab.hpp -o src/parser.tab.cpp
 CPPFLAGS=-std=c++20 -g -Iinclude -Isrc
 
-objects=src/parser.tab.o src/scanner.o src/main.o src/hello.o src/tree.o
+objects=src/parser.tab.o src/scanner.o src/main.o src/tree.o
 
 slang: $(objects) 
 	$(CXX) $(CPPFLAGS) $(objects) -o $@
