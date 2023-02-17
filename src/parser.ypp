@@ -1,6 +1,8 @@
 %{
     #include "slang.hpp"
     #include <iostream>
+
+extern Node* root;
 %}
 
 %token FUNC PRINT RETURN OPENBLOCK CLOSEBLOCK INT
@@ -18,9 +20,33 @@
 
 %%
 
-program : FUNC {
+program : 
+    global_list {
+        NodeRef child;
+        child.reset((Node*) $1);
+        NodeRefList children = { child };
+        root = new Node(NodeType::PROGRAM, children);
+    };
 
-}
+global_list : 
+    global {
+        NodeRef child;
+        child.reset((Node*) $1);
+        NodeRefList children = { child };
+        $$ = (long long) new Node(NodeType::GLOBAL_LIST, children);
+    }
+    | global_list global {
+        NodeRef child, child2;
+        child.reset((Node*) $1);
+        child2.reset((Node*) $2);
+        NodeRefList children = { child, child2};
+        $$ = (long long) new Node(NodeType::GLOBAL_LIST, children);
+    };
+
+global :
+    FUNC {
+        $$ = (long long) (Node*) new StringNode("Hei");
+    };
 
 %%
 

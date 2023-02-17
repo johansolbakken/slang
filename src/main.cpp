@@ -3,11 +3,12 @@
 #include "header.hpp"
 #include "slang.hpp"
 
-int main() {
-    std::cout << "Hello, World!" << hello() << std::endl;
-    while (true) {
-        auto token = yylex();
-        //std::cout << "Read: " << token << std::endl;
-    }
-    return 0;
+Node* root;
+
+int main(int argc, const char **argv)
+{
+    yyparse();
+    yylex_destroy();
+
+    root->print();
 }
