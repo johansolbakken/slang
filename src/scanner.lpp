@@ -1,6 +1,9 @@
 %{
     #include <iostream>
     #include "slang.hpp"
+
+    #define SCAN_DEBUG true
+    #define SCAN_PRINT(a) if (SCAN_DEBUG) std::cout << a << std::endl;
 %}
 
 %option noyywrap
@@ -8,10 +11,30 @@
 %option yylineno
 
 WHITESPACE [\ \t\v\r\n]
+INT_NUMBER -?[0-9]+
+FLOAT_NUMBER -?[0-9]+.[0-9]+
+IDENTIFIER ([a-zA-Z]|_)([a-zA-Z0-9]|\_)*
+QUOTED \"([^\"\n]|\\\")*\"
+COMMENT \/\/[^\n]+
 
 %%
 
 {WHITESPACE}+           { }
-func                    { return FUNC; }
+{COMMENT}               { }
+{QUOTED}                { SCAN_PRINT("string"); return STRING; }
+
+func                    { SCAN_PRINT("func");return FUNC; }
+var                     { SCAN_PRINT("var");return VAR; }
+int                     { SCAN_PRINT("int");return INT; }
+return                  { SCAN_PRINT("return");return RETURN; }
+print                   { SCAN_PRINT("print");return PRINT; }
+
+{INT_NUMBER}            { SCAN_PRINT("int");return INT_NUMBER; }
+{FLOAT_NUMBER}          { SCAN_PRINT("float");return FLOAT_NUMBER; }
+{IDENTIFIER}            { SCAN_PRINT("identifier");return IDENTIFIER; }
+\{                      { SCAN_PRINT("open block"); return OPENBLOCK; }
+\}                      { SCAN_PRINT("close block"); return CLOSEBLOCK; }
+
+.                       { SCAN_PRINT(yytext[0]); return yytext[0]; }
 
 %%

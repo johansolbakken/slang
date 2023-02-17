@@ -7,7 +7,7 @@ int main() {
     std::cout << "Hello, World!" << hello() << std::endl;
     while (true) {
         auto token = yylex();
-        std::cout << "Read: " << token << std::endl;
+        //std::cout << "Read: " << token << std::endl;
     }
     return 0;
 }
