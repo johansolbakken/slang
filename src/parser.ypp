@@ -2,6 +2,7 @@
     #include "slang.hpp"
     #include <iostream>
     extern Node* root;
+    extern char yytext[];
 %}
 
 %token FUNC PRINT RETURN OPENBLOCK CLOSEBLOCK INT
@@ -21,28 +22,24 @@
 
 program : 
     global_list {
-        auto node = new Node(NodeType::PROGRAM, 1);
-        node->ppChildren[0] = get_node($1);
+        auto node = new Node(NodeType::PROGRAM, {get_node($1)});
         root = node;
     };
 
 global_list : 
     global {
-        auto node = new Node(NodeType::GLOBAL_LIST, 1);
-        node->ppChildren[0] = get_node($1);
+        auto node = new Node(NodeType::GLOBAL_LIST, {get_node($1)});
         $$ = store_node(node);
     }
     | global_list global {
-        auto node = new Node(NodeType::GLOBAL_LIST, 2);
-        node->ppChildren[0] = get_node($1);
-        node->ppChildren[1] = get_node($2);
-
+        auto node = new Node(NodeType::GLOBAL_LIST, {get_node($1), get_node($2)});
         $$ = store_node(node);
     };
 
 global :
-    FUNC {
-        auto node = new StringNode("Hei");
+    FUNC STRING {
+        auto text = strdup(yytext);
+        auto node = new StringNode(text);
         $$ = store_node(node);
     };
 

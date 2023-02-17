@@ -12,13 +12,9 @@ using NodeRef = Node *;
 class Node
 {
 public:
-    Node(NodeType type, int nChildren)
-        : type(type), nChildren(nChildren)
+    Node(NodeType type, const std::vector<Node *> &children)
+        : type(type), children(children)
     {
-        if (nChildren > 0)
-        {
-            ppChildren = new NodeRef[nChildren];
-        }
     }
 
     virtual ~Node()
@@ -30,25 +26,30 @@ public:
         for (int i = 0; i < indent; i++)
             std::cout << " ";
         std::cout << nodeTypeToString(type) << std::endl;
-        std::cout << ppChildren[0] << std::endl;
-        for (int i = 0; i < nChildren; i++)
-            ppChildren[i]->print(indent + 2);
+        for (const auto &child : children)
+            child->print(indent + 2);
     }
 
     NodeType type;
     void *data = nullptr;
-    int nChildren = 0;
-    Node **ppChildren = nullptr;
+    std::vector<Node *> children;
 };
 
 class StringNode : public Node
 {
 public:
     StringNode(const std::string &text)
-        : Node(NodeType::STRING_DATA, 0), text(text)
+        : Node(NodeType::STRING_DATA, {}), text(text)
     {
     }
     ~StringNode() override = default;
+
+    void print(int indent = 0) override
+    {
+        for (int i = 0; i < indent; i++)
+            std::cout << " ";
+        std::cout << nodeTypeToString(type) << " " << text << std::endl;
+    }
 
     std::string text;
 };

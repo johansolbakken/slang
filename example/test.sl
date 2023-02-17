@@ -1,2 +1,2 @@
-func
-func
+func "heisann"
+func "Du var kul"
