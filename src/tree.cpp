@@ -35,11 +35,30 @@ const char *nodeTypeToString(NodeType type)
     return node_type_string[(int)type];
 }
 
-void finalize_subtree(Node* node)
+void finalize_subtree(Node *node)
 {
     for (auto child : node->children)
     {
         finalize_subtree(child);
         delete child;
     }
+}
+
+Node::Node(NodeType type, const std::vector<Node *> &children)
+    : type(type), children(children)
+{
+}
+
+Node::~Node()
+{
+    delete data;
+}
+
+void Node::print(int indent)
+{
+    for (int i = 0; i < indent; i++)
+        std::cout << " ";
+    std::cout << nodeTypeToString(type) << std::endl;
+    for (const auto &child : children)
+        child->print(indent + 2);
 }
