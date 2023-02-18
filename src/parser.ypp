@@ -192,6 +192,10 @@ print_statement :
         auto node = new Node(NodeType::PRINT_STATEMENT, { get_node($3) });
         $$ = store_node(node);
     }
+    | PRINT '(' string_data ',' '[' expression_list ']' ')' ';' {
+        auto node = new Node(NodeType::PRINT_STATEMENT, { get_node($3), get_node($6) });
+        $$ = store_node(node);
+    }
 ;
 
 if_statement :
@@ -218,6 +222,10 @@ identifier :
 ;
 
 expression : 
+
+;
+
+expression_list :
 
 ;
 
