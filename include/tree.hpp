@@ -19,6 +19,7 @@ public:
 
     virtual ~Node()
     {
+        delete data;
     }
 
     virtual void print(int indent = 0)
@@ -62,3 +63,5 @@ public:
 
     int number;
 };
+
+void finalize_subtree(Node* node);

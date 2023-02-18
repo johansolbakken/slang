@@ -34,3 +34,12 @@ const char *nodeTypeToString(NodeType type)
 {
     return node_type_string[(int)type];
 }
+
+void finalize_subtree(Node* node)
+{
+    for (auto child : node->children)
+    {
+        finalize_subtree(child);
+        delete child;
+    }
+}

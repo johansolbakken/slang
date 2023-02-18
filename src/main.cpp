@@ -9,4 +9,7 @@ int main(int argc, const char **argv)
     yylex_destroy();
 
     root->print();
+
+    finalize_subtree(root);
+    delete root;
 }
