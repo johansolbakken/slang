@@ -49,10 +49,7 @@ Node::Node(NodeType type, const std::vector<Node *> &children)
 {
 }
 
-Node::~Node()
-{
-    delete data;
-}
+Node::~Node() = default;
 
 void Node::print(int indent)
 {
@@ -73,4 +70,40 @@ void StringNode::print(int indent)
     for (int i = 0; i < indent; i++)
         std::cout << " ";
     std::cout << nodeTypeToString(type) << " " << text << std::endl;
+}
+
+IntNode::IntNode(int number)
+    : Node(NodeType::INT_DATA, {}), number(number)
+{
+}
+
+void IntNode::print(int indent)
+{
+    for (int i = 0; i < indent; i++)
+        std::cout << " ";
+    std::cout << nodeTypeToString(type) << " " << number << std::endl;
+}
+
+FloatNode::FloatNode(float number)
+    : Node(NodeType::FLOAT_DATA, {}), number(number)
+{
+}
+
+void FloatNode::print(int indent)
+{
+    for (int i = 0; i < indent; i++)
+        std::cout << " ";
+    std::cout << nodeTypeToString(type) << " " << number << std::endl;
+}
+
+IdentifierNode::IdentifierNode(const std::string &name)
+    : Node(NodeType::IDENTIFIER_DATA, {}), name(name)
+{
+}
+
+void IdentifierNode::print(int indent)
+{
+    for (int i = 0; i < indent; i++)
+        std::cout << " ";
+    std::cout << nodeTypeToString(type) << " " << name << std::endl;
 }
