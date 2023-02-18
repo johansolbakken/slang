@@ -188,7 +188,10 @@ return_statement :
 ;
 
 print_statement :
-
+    PRINT '(' string_data ')' ';' {
+        auto node = new Node(NodeType::PRINT_STATEMENT, { get_node($3) });
+        $$ = store_node(node);
+    }
 ;
 
 if_statement :
@@ -208,11 +211,21 @@ break_statement :
 ;
 
 identifier :
-
+    IDENTIFIER {
+        auto node = new IdentifierNode(std::string(yytext));
+        $$ = store_node(node);
+    }
 ;
 
 expression : 
 
+;
+
+string_data :
+    STRING {
+        auto node = new StringNode(std::string(yytext));
+        $$ = store_node(node);
+    }
 ;
 
 %%

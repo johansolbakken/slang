@@ -74,3 +74,14 @@ void StringNode::print(int indent)
         std::cout << " ";
     std::cout << nodeTypeToString(type) << " " << text << std::endl;
 }
+
+IdentifierNode::IdentifierNode(const std::string& name)
+    : Node(NodeType::IDENTIFIER_DATA, {}), name(name)
+{
+}
+
+void IdentifierNode::print(int indent) {
+for (int i = 0; i < indent; i++)
+        std::cout << " ";
+    std::cout << nodeTypeToString(type) << " " << name << std::endl;
+} 

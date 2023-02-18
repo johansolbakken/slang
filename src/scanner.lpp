@@ -2,7 +2,7 @@
     #include <iostream>
     #include "slang.hpp"
 
-    #define SCAN_DEBUG true
+    #define SCAN_DEBUG false
     #define SCAN_PRINT(a) if (SCAN_DEBUG) std::cout << a << std::endl;
 %}
 

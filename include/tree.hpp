@@ -39,4 +39,15 @@ public:
     int number;
 };
 
+class IdentifierNode : public Node
+{
+public:
+    IdentifierNode(const std::string& name);
+    ~IdentifierNode() override = default;
+    void print(int indent = 0) override;
+
+public:
+    std::string name;
+};
+
 void finalize_subtree(Node *node);
