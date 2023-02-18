@@ -16,4 +16,4 @@ jobs:
     - name: make
       run: make
     - name: run example
-      run: ./slang < examples/test.sl
+      run: ./slang < example/test.sl
