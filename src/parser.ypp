@@ -38,8 +38,7 @@ global_list :
 
 global :
     FUNC STRING {
-        auto text = strdup(yytext);
-        auto node = new StringNode(text);
+        auto node = new StringNode(std::string(yytext));
         $$ = store_node(node);
     };
 
