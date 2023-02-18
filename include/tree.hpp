@@ -23,18 +23,9 @@ public:
 class StringNode : public Node
 {
 public:
-    StringNode(const std::string &text)
-        : Node(NodeType::STRING_DATA, {}), text(text)
-    {
-    }
+    StringNode(const std::string &text);
     ~StringNode() override = default;
-
-    void print(int indent = 0) override
-    {
-        for (int i = 0; i < indent; i++)
-            std::cout << " ";
-        std::cout << nodeTypeToString(type) << " " << text << std::endl;
-    }
+    void print(int indent = 0) override;
 
     std::string text;
 };

@@ -62,3 +62,15 @@ void Node::print(int indent)
     for (const auto &child : children)
         child->print(indent + 2);
 }
+
+StringNode::StringNode(const std::string &text)
+    : Node(NodeType::STRING_DATA, {}), text(text)
+{
+}
+
+void StringNode::print(int indent)
+{
+    for (int i = 0; i < indent; i++)
+        std::cout << " ";
+    std::cout << nodeTypeToString(type) << " " << text << std::endl;
+}
