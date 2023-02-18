@@ -16,7 +16,7 @@ public:
 
 public:
     NodeType type;
-    void *data = nullptr;
+    std::string data;
     std::vector<Node *> children;
 };
 
@@ -33,16 +33,27 @@ public:
 class IntNode : public Node
 {
 public:
-    IntNode();
-    ~IntNode() override;
+    IntNode(int number);
+    ~IntNode() override = default;
+    void print(int indent = 0) override;
 
     int number;
+};
+
+class FloatNode : public Node
+{
+public:
+    FloatNode(float number);
+    ~FloatNode() override = default;
+    void print(int indent = 0) override;
+
+    float number;
 };
 
 class IdentifierNode : public Node
 {
 public:
-    IdentifierNode(const std::string& name);
+    IdentifierNode(const std::string &name);
     ~IdentifierNode() override = default;
     void print(int indent = 0) override;
 

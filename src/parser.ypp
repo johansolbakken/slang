@@ -188,11 +188,11 @@ return_statement :
 ;
 
 print_statement :
-    PRINT '(' string_data ')' ';' {
+    PRINT '(' string ')' ';' {
         auto node = new Node(NodeType::PRINT_STATEMENT, { get_node($3) });
         $$ = store_node(node);
     }
-    | PRINT '(' string_data ',' '[' expression_list ']' ')' ';' {
+    | PRINT '(' string ',' '[' expression_list ']' ')' ';' {
         auto node = new Node(NodeType::PRINT_STATEMENT, { get_node($3), get_node($6) });
         $$ = store_node(node);
     }
@@ -222,14 +222,86 @@ identifier :
 ;
 
 expression : 
+    expression '+' expression {
+        auto node = new Node(NodeType::EXPRESSION, {get_node($1), get_node($3)});
+        node->data = "+";
+        $$ = store_node(node);
+    }
+    | expression '-' expression {
+        auto node = new Node(NodeType::EXPRESSION, {get_node($1), get_node($3)});
+        node->data = "-";
+        $$ = store_node(node);
+    }
+    | expression '*' expression {
+        auto node = new Node(NodeType::EXPRESSION, {get_node($1), get_node($3)});
+        node->data = "*";
+        $$ = store_node(node);
+    }
+    | expression '/' expression {
+        auto node = new Node(NodeType::EXPRESSION, {get_node($1), get_node($3)});
+        node->data = "/";
+        $$ = store_node(node);
+    }
+    | '-' expression {
+        auto node = new Node(NodeType::EXPRESSION, {get_node($2)});
+        node->data = "-";
+        $$ = store_node(node);
+    }
+    | '(' expression ')' {
+        auto node = new Node(NodeType::EXPRESSION, {get_node($2)});
+        $$ = store_node(node);
+    }
+    | number {
+        auto node = new Node(NodeType::EXPRESSION, {get_node($1) });
+        $$ = store_node(node);
+    }
+    | identifier {
+        auto node = new Node(NodeType::EXPRESSION, {get_node($1)});
+        $$ = store_node(node);
+    }
+    | array_indexing {
+        auto node = new Node(NodeType::EXPRESSION, {get_node($1)});
+        $$ = store_node(node);
+    }
+    | identifier '(' argument_list ')' {
+        auto node = new Node(NodeType::EXPRESSION, {get_node($1), get_node($3)});
+        $$ = store_node(node);
+    }
 
 ;
 
 expression_list :
-
+    expression_list ',' expression {
+        auto node = new Node(NodeType::EXPRESSION_LIST, {get_node($1), get_node($3)});
+        $$ = store_node(node);
+    }
+    | expression {
+        auto node = new Node(NodeType::EXPRESSION_LIST, {get_node($1) });
+        $$ = store_node(node);
+    }
 ;
 
-string_data :
+number : 
+    INT_NUMBER {
+        auto node = new IntNode(atoi(yytext));
+        $$ = store_node(node);
+    }
+    | FLOAT_NUMBER {
+        auto node = new FloatNode(atof(yytext));
+        $$ = store_node(node);
+    }
+;
+
+argument_list : {
+    auto node = new Node(NodeType::ARGUMENT_LIST, { });
+        $$ = store_node(node);
+    }
+    | expression_list {
+        auto node = new Node(NodeType::ARGUMENT_LIST, {  get_node($1) });
+        $$ = store_node(node);
+    }
+
+string :
     STRING {
         auto node = new StringNode(std::string(yytext));
         $$ = store_node(node);
