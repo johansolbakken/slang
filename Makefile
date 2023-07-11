@@ -6,6 +6,7 @@ CPPFLAGS=-std=c++20 -g -Iinclude -Isrc
 
 objects=src/parser.tab.o src/scanner.o src/main.o src/tree.o src/address_store.o
 
+all: slang
 slang: $(objects) 
 	$(CXX) $(CPPFLAGS) $(objects) -o $@
 src/scanner.cpp: src/scanner.lpp
